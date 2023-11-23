@@ -1,0 +1,52 @@
+name: Build OCI and Push to ECR
+
+on:
+  workflow_call:
+    inputs:
+      ecr_repository:
+        required: true
+        type: string
+      aws_region:
+        required: true
+        type: string
+      aws_access_key_id:
+        required: true
+        type: string
+      aws_secret_access_key:
+        required: true
+        type: string
+      image_tag:
+        required: false
+        type: string
+        default: "latest"
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'zulu'
+
+      - name: Build Docker image using sbt-native-packager
+        run: sbt 'Docker / publishLocal'
+
+#      - name: Log in to Amazon ECR
+#        id: login-ecr
+#        uses: aws-actions/amazon-ecr-login@v1
+#        with:
+#          aws-access-key-id: ${{ inputs.aws_access_key_id }}
+#          aws-secret-access-key: ${{ inputs.aws_secret_access_key }}
+#          aws-region: ${{ inputs.aws_region }}
+#
+#      - name: Tag Docker Image
+#        run: docker tag ${{ steps.login-ecr.outputs.registry }}/my-app:${{ inputs.image_tag }} ${{ steps.login-ecr.outputs.registry }}/${{ inputs.ecr_repository }}:${{ inputs.image_tag }}
+#
+#      - name: Push Docker image to Amazon ECR
+#        run: docker push ${{ steps.login-ecr.outputs.registry }}/${{ inputs.ecr_repository }}:${{ inputs.image_tag }}
