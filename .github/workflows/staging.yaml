@@ -18,7 +18,18 @@ jobs:
   build_and_push:
     needs: test
     uses: ./.github/workflows/build_and_push.yaml
+    with:
+      aws_region: "sa-east-1"
+      aws_access_key_id: "foo-access-key"
+      aws_secret_access_key: "foo-secret-key"
+      ecr_repository: "foo-repository"
+      image_tag: "latest"
 
   deploy:
     needs: build_and_push
     uses: ./.github/workflows/deploy.yaml
+    with:
+      aws_region: "bar-region"
+      eks_cluster_name: "bar-cluster"
+      aws_access_key_id: "bar-access-key"
+      aws_secret_access_key: "bar-secret-key"
