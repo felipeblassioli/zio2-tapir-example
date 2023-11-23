@@ -23,8 +23,8 @@ object Main extends ZIOAppDefault {
     (
       for {
         actualPort <- Server.install(app.withDefaultErrorResponse)
-        _ <- Console.printLine(s"Go to http://localhost:${actualPort}/docs to open SwaggerUI. Press ENTER key to exit.")
-        _ <- Console.readLine
+        _          <- Console.printLine(s"Go to http://localhost:$actualPort/docs to open SwaggerUI. Press ENTER key to exit.")
+        _          <- Console.readLine
       } yield ()
     ).provide(
       Server.defaultWithPort(port)
