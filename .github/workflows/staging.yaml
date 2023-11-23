@@ -1,9 +1,11 @@
 name: Staging Workflow
 
 on:
-  push:
-    branches:
-      - staging
+  pull_request:
+    types: [ opened, synchronize ]
+#  push:
+#    branches:
+#      - staging
 
 jobs:
   lint:

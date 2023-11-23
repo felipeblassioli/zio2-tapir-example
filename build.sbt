@@ -22,3 +22,4 @@ lazy val rootProject = (project in file(".")).settings(
     testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework"))
   )
 )
+  .enablePlugins(JavaAppPackaging, DockerPlugin)

@@ -1,4 +1,4 @@
-name: Build and Push to ECR
+name: Build OCI and Push to ECR
 
 on:
   workflow_call:
