@@ -1,0 +1,29 @@
+name: Deploy to EKS
+
+on:
+  workflow_call:
+    inputs:
+      aws_region:
+        required: true
+        type: string
+      eks_cluster_name:
+        required: true
+        type: string
+      aws_access_key_id:
+        required: true
+        type: string
+      aws_secret_access_key:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print Deployment Parameters
+        run: |
+          echo "AWS Region: ${{ inputs.aws_region }}"
+          echo "EKS Cluster Name: ${{ inputs.eks_cluster_name }}"
+          echo "AWS Access Key ID: ${{ inputs.aws_access_key_id }}"
+          echo "AWS Secret Access Key: ${{ inputs.aws_secret_access_key }}"

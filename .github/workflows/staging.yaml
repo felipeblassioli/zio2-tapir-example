@@ -1,0 +1,22 @@
+name: Staging Workflow
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  lint:
+    uses: ./.github/workflows/lint.yaml
+
+  test:
+    needs: lint
+    uses: ./.github/workflows/test.yaml
+
+  build_and_push:
+    needs: test
+    uses: ./.github/workflows/build_and_push.yaml
+
+  deploy:
+    needs: build_and_push
+    uses: ./.github/workflows/deploy.yaml
